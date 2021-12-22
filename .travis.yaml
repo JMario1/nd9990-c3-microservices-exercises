@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  - 12
+services:
+  - docker
+  - docker-compose
+before_script:
+  - echo "No test to run"
+script:
+  - docker --version
+  - docker-compose -f project/docker-compose-build.yaml build --parallel
+  - docker tag udagram-api-feed jm247/udagram-api-feed:v1
+  - docker tag udagram-api-user jm247/udagram-api-user:v1
+  - docker tag udagram-frontend jm247/udagram-frontend:v1
+  - docker tag udagram-reverseproxy jm247/udagram-reverseproxy:v1
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push jm247/udagram-api-feed:v1
+  - docker push jm247/udagram-api-user:v1
+  - docker push jm247/udagram-frontend:v1
+  - docker push jm247/udagram-reverseproxy:v1
