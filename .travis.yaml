@@ -19,3 +19,4 @@ after_success:
   - docker push jm247/udagram-api-user:v1
   - docker push jm247/udagram-frontend:v1
   - docker push jm247/udagram-reverseproxy:v1
+  
